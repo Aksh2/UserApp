@@ -32,4 +32,6 @@ class UserViewModel
         }
     }
 
+    fun retry() = fetchUsers()
+
 }
