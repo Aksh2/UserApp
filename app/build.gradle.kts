@@ -59,6 +59,9 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
 
+    //Coil
+    implementation(libs.coil.compose)
+
     // Dagger Dependencies
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -68,6 +71,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp.logging)
+
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
