@@ -3,6 +3,7 @@ package com.assignment.userapp.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.assignment.userapp.data.model.ErrorMessages
+import com.assignment.userapp.data.model.User
 import com.assignment.userapp.data.model.UserUiState
 import com.assignment.userapp.data.repository.UserRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +16,12 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel
 @Inject constructor(private val repository: UserRepositoryImpl) : ViewModel() {
-    private val _uiState = MutableStateFlow<UserUiState>(UserUiState.Loading)
-    val uiState: StateFlow<UserUiState> = _uiState.asStateFlow()
+    private val _userListState = MutableStateFlow<UserUiState<List<User>>>(UserUiState.Loading)
+    val userListState: StateFlow<UserUiState<List<User>>> = _userListState.asStateFlow()
+
+    var selectedId: Int = -1
+        private set
+    private var cachedUsers: List<User> = emptyList()
 
     init {
         fetchUsers()
@@ -25,13 +30,21 @@ class UserViewModel
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            _uiState.value = repository.fetchUsers().fold(
-                onSuccess = { UserUiState.Success(it) },
+            _userListState.value = repository.fetchUsers().fold(
+                onSuccess = { users ->
+                    cachedUsers = users
+                    UserUiState.Success(users)
+                },
                 onFailure = { UserUiState.Error(it.message ?: ErrorMessages.ERROR_UNKNOWN) }
             )
         }
     }
 
     fun retry() = fetchUsers()
+
+    fun getUserById(id: Int): User? {
+        selectedId = id
+        return cachedUsers.find { it.id == id }
+    }
 
 }
