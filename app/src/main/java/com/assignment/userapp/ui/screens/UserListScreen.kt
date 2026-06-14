@@ -1,5 +1,6 @@
 package com.assignment.userapp.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.assignment.userapp.Constants.UNKNOWN
 import com.assignment.userapp.data.model.User
 import com.assignment.userapp.data.model.UserUiState
 import com.assignment.userapp.viewmodel.UserViewModel
@@ -44,7 +46,7 @@ fun UserListScreen(
     viewModel: UserViewModel = hiltViewModel(),
     onUserClick: (User) -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.userListState.collectAsStateWithLifecycle()
     Scaffold(topBar = {
         TopAppBar(
             title = { Text("Users") },
@@ -94,18 +96,19 @@ fun UserList(
     ) {
         items(
             items = user,
-            key = { it.id }) { userItem ->
-            UserCard(user = userItem)
+            key = { it.id ?: -1}) { userItem ->
+            UserCard(user = userItem, onUserClick)
         }
     }
 }
 
 @Composable
-fun UserCard(user: User) {
+fun UserCard(user: User, onUserClick: (User) -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth()
+            .clickable{ onUserClick(user)},
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Row(
             modifier = Modifier
@@ -126,7 +129,7 @@ fun UserCard(user: User) {
                     .clip(CircleShape)
             )
             Text(
-                text = user.name,
+                text = user.name ?: UNKNOWN,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
