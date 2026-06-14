@@ -1,4 +1,4 @@
-package com.assignment.userapp.data.model
+package com.assignment.userapp.data
 
 object ErrorMessages{
     const val ERROR_BODY_NUll = "Response Body is null"

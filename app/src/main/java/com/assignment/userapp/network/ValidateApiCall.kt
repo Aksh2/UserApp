@@ -1,6 +1,6 @@
 package com.assignment.userapp.network
 
-import com.assignment.userapp.data.model.ErrorMessages
+import com.assignment.userapp.data.ErrorMessages
 import okio.IOException
 import retrofit2.HttpException
 import retrofit2.Response

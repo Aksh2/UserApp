@@ -2,7 +2,7 @@ package com.assignment.userapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.assignment.userapp.data.model.ErrorMessages
+import com.assignment.userapp.data.ErrorMessages
 import com.assignment.userapp.data.model.User
 import com.assignment.userapp.data.model.UserUiState
 import com.assignment.userapp.data.repository.UserRepositoryImpl

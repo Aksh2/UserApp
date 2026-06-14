@@ -43,7 +43,7 @@ import com.assignment.userapp.Constants.PHONE
 import com.assignment.userapp.Constants.STATE
 import com.assignment.userapp.Constants.USERNAME
 import com.assignment.userapp.Constants.ZIP
-import com.assignment.userapp.data.model.ErrorMessages.ERROR_USER_NOT_FOUND
+import com.assignment.userapp.data.ErrorMessages.ERROR_USER_NOT_FOUND
 import com.assignment.userapp.data.model.User
 import com.assignment.userapp.data.model.UserUiState
 import com.assignment.userapp.viewmodel.UserViewModel
