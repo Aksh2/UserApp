@@ -1,7 +1,7 @@
 package com.assignment.userapp.data.model
 
-sealed class UserUiState {
-    data object Loading: UserUiState()
-    data class Success(val user:List<User>): UserUiState()
-    data class Error(val message: String): UserUiState()
+sealed class UserUiState<out T> {
+    data object Loading: UserUiState<Nothing>()
+    data class Success<T>(val user:List<User>): UserUiState<T>()
+    data class Error(val message: String): UserUiState<Nothing>()
 }
